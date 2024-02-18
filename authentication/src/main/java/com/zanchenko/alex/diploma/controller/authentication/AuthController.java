@@ -7,6 +7,8 @@ import com.zanchenko.alex.diploma.dto.payload.request.LoginRequest;
 import com.zanchenko.alex.diploma.dto.payload.request.SignUpRequest;
 import com.zanchenko.alex.diploma.dto.payload.response.JwtResponse;
 import com.zanchenko.alex.diploma.dto.payload.response.MessageResponse;
+import com.zanchenko.alex.diploma.repository.RoleRepository;
+import com.zanchenko.alex.diploma.repository.UserRepository;
 import com.zanchenko.alex.diploma.service.UserService;
 import com.zanchenko.alex.diploma.service.RoleService;
 import com.zanchenko.alex.diploma.sucurity.jwt.JwtUtils;
@@ -122,4 +124,5 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
 }
