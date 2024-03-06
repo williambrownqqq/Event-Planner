@@ -1,6 +1,6 @@
-package com.zanchenko.alex.diploma.sucurity.jwt;
+package com.zanchenko.alex.diploma.security.jwt;
 
-import com.zanchenko.alex.diploma.sucurity.services.UserDetailsServiceImpl;
+import com.zanchenko.alex.diploma.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

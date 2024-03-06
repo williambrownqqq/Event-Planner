@@ -1,9 +1,8 @@
-package com.zanchenko.alex.diploma.sucurity.config;
+package com.zanchenko.alex.diploma.security.config;
 
-import com.zanchenko.alex.diploma.Authentication;
-import com.zanchenko.alex.diploma.sucurity.jwt.AuthenticationTokenFilter;
-import com.zanchenko.alex.diploma.sucurity.jwt.AuthentictionEntryPointJwt;
-import com.zanchenko.alex.diploma.sucurity.services.UserDetailsServiceImpl;
+import com.zanchenko.alex.diploma.security.jwt.AuthenticationTokenFilter;
+import com.zanchenko.alex.diploma.security.jwt.AuthentictionEntryPointJwt;
+import com.zanchenko.alex.diploma.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,13 +12,18 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
+@EnableWebSecurity
 @EnableMethodSecurity // to enable Spring Security’s web security support and provide the Spring MVC integration.
 //  annotation in Spring is used to enable Spring Security's method-level security. Method-level security allows you to control access to individual methods in your Spring beans based on the roles or permissions of the authenticated user.
 public class WebSecurityConfig{
@@ -56,20 +60,26 @@ public class WebSecurityConfig{
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider authenticationProvider, AuthenticationTokenFilter authenticationJwtTokenFilter)
+    public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector, AuthenticationProvider authenticationProvider, AuthenticationTokenFilter authenticationJwtTokenFilter)
             throws Exception {
+//        MvcRequestMatcher mvcMatcher = MvcRequestMatcher.pathMatchers("/api/auth/**");
+//        mvcMatcher.setServletPath("/"); // Assuming Spring MVC servlet is mapped to "/"
+
+//        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
+
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                    auth.requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/test/**").permitAll()
+                .authorizeHttpRequests(auth -> auth
+//                    auth.requestMatchers("/api/auth/**").permitAll()
+//                                .requestMatchers("/api/test/**").permitAll()
+                    .requestMatchers(antMatcher("/api/auth/**")).permitAll()
+                        .requestMatchers(antMatcher("/api/test/**")).permitAll()
                             .anyRequest().authenticated()
                 );
                 http.authenticationProvider(authenticationProvider());
 
                 http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }

@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface EventService{
 
-    List<EventDTO> findAllEvents();
-
-    EventDTO findEventByID(Long EventID);
+    List<EventDTO> getAllEvents();
 
     EventDTO saveEvent(EventDTO eventDTO);
 
-    void deleteEvent(Long eventID);
+    EventDTO getEventByID(Long EventID);
 
-    void editEvent(Long eventID, EventDTO eventDTO);
+    void updateEvent(Long eventID, EventDTO eventDTO);
+
+    void deleteEvent(Long eventID);
 
     List<EventDTO> searchEvents(String query);
 

@@ -1,4 +1,4 @@
-package com.zanchenko.alex.diploma.sucurity.services;
+package com.zanchenko.alex.diploma.security.services;
 
 import com.zanchenko.alex.diploma.domain.autentication.User;
 import com.zanchenko.alex.diploma.repository.UserRepository;

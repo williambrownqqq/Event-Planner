@@ -1,16 +1,17 @@
 package com.zanchenko.alex.diploma.controller;
 
+import com.zanchenko.alex.diploma.domain.Event;
 import com.zanchenko.alex.diploma.dto.EventDTO;
 import com.zanchenko.alex.diploma.service.EventService;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,32 +28,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+import static com.zanchenko.alex.diploma.mapper.EventMapper.mapToEvent;
+
+@Slf4j
+@Validated
 @CrossOrigin
+@RestController
 @RequestMapping("/events")
+@RequiredArgsConstructor
 public class EventController {
 
-    private EventService eventService;
-    private final Logger logger = LoggerFactory.getLogger(EventController.class);
-    @Autowired
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
-    }
+    private final EventService eventService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Map<String, Object>> getAllEvents(){
-        List<EventDTO> eventDTOS = eventService.findAllEvents();
+        List<EventDTO> events = eventService.getAllEvents();
 //        List<Event> events = eventDTOS.stream()
 //                .map(EventMapper::mapToEvent)
 //                .toList();
         Map<String, Object> response = new HashMap<>();
-        response.put("events", eventDTOS);
+        response.put("events", events);
       return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{eventID}")
     public EventDTO getEventDetails(@PathVariable("eventID") Long eventID){
-        return eventService.findEventByID(eventID);
+        return eventService.getEventByID(eventID);
     }
 
     @PostMapping("/new")
@@ -65,18 +66,18 @@ public class EventController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        EventDTO savedEventDTO = eventService.saveEvent(eventDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedEventDTO);
+        Event savedEvent = mapToEvent(eventService.saveEvent(eventDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
     }
 
     @GetMapping("/{eventID}/edit")
     @ResponseBody
     public EventDTO updateEventForm(@PathVariable("eventID") Long eventID){
-        return eventService.findEventByID(eventID);
+        return eventService.getEventByID(eventID);
     }
 
     @PutMapping("/{eventID}/edit")
-    public ResponseEntity<?> editEventDetails(@PathVariable("eventID") Long eventID,
+    public ResponseEntity<?> updateEventDetails(@PathVariable("eventID") Long eventID,
                                  @Valid @RequestBody EventDTO eventDTO,
                                  BindingResult result){
         if(result.hasErrors()){
@@ -86,7 +87,7 @@ public class EventController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        eventService.editEvent(eventID, eventDTO);
+        eventService.updateEvent(eventID, eventDTO);
         return ResponseEntity.ok("Event has been successfully updated");
     }
 

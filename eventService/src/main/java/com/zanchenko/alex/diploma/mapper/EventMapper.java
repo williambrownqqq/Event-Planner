@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import static com.zanchenko.alex.diploma.mapper.FacilityMapper.mapToFacility;
 import static com.zanchenko.alex.diploma.mapper.FacilityMapper.mapToFacilityDTO;
+import static com.zanchenko.alex.diploma.mapper.TaskMapper.mapToTaskDTO;
 import static java.util.stream.Collectors.toList;
 
 public class EventMapper {
@@ -20,14 +21,38 @@ public class EventMapper {
         return EventDTO.builder()
                 .id(event.getId())
                 .eventTitle(event.getEventTitle())
+                .photoURL(event.getPhotoURL())
                 .eventDescription(event.getEventDescription())
                 .eventLocation(event.getEventLocation())
-                .photoURL(event.getPhotoURL())
                 .facilityDTO(mapToFacilityDTO(event.getFacility()))
+                .eventDate(event.getEventDate())
+                .urgency(event.getUrgency())
+                .eventType(event.getEventType())
+                .action(event.getAction())
+                .openEventDate(event.getOpenEventDate())
+                .closedEventDate(event.getClosedEventDate())
+                .tasks(mapToTaskDTO(event.getTasks()))
                 .build();
     }
 
+    public static List<EventDTO> mapToEventDTO(List<Event> events){
+        return events.stream()
+                .map(EventMapper::mapToEventDTO)
+                .toList();
+    }
+
     public static EventDTO mapToEventDTOforFacility(Event event){
+
+        return EventDTO.builder()
+                .id(event.getId())
+                .eventTitle(event.getEventTitle())
+                .eventDescription(event.getEventDescription())
+                .eventLocation(event.getEventLocation())
+                .photoURL(event.getPhotoURL())
+                .build();
+    }
+
+    public static EventDTO mapToEventDTOforTask(Event event){
 
         return EventDTO.builder()
                 .id(event.getId())
