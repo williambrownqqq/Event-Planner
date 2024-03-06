@@ -23,6 +23,7 @@ public class SignUpRequest {
     String email;
 
     Set<String> role;
+
     @NotBlank
     @Size(min = 6, max = 40)
     String password;

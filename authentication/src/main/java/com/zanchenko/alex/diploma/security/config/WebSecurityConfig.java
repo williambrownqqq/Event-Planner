@@ -18,12 +18,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
-@EnableWebSecurity
 @EnableMethodSecurity // to enable Spring Security’s web security support and provide the Spring MVC integration.
 //  annotation in Spring is used to enable Spring Security's method-level security. Method-level security allows you to control access to individual methods in your Spring beans based on the roles or permissions of the authenticated user.
 public class WebSecurityConfig{
@@ -62,10 +62,7 @@ public class WebSecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector, AuthenticationProvider authenticationProvider, AuthenticationTokenFilter authenticationJwtTokenFilter)
             throws Exception {
-//        MvcRequestMatcher mvcMatcher = MvcRequestMatcher.pathMatchers("/api/auth/**");
-//        mvcMatcher.setServletPath("/"); // Assuming Spring MVC servlet is mapped to "/"
-
-//        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
+        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
@@ -73,8 +70,10 @@ public class WebSecurityConfig{
                 .authorizeHttpRequests(auth -> auth
 //                    auth.requestMatchers("/api/auth/**").permitAll()
 //                                .requestMatchers("/api/test/**").permitAll()
-                    .requestMatchers(antMatcher("/api/auth/**")).permitAll()
-                        .requestMatchers(antMatcher("/api/test/**")).permitAll()
+//                    .requestMatchers(antMatcher("/api/auth/**")).permitAll()
+//                        .requestMatchers(antMatcher("/api/test/**")).permitAll()
+                      .requestMatchers(mvcMatcherBuilder.pattern("/api/auth/**")).permitAll()
+                      .requestMatchers(mvcMatcherBuilder.pattern("/api/test/**")).permitAll()
                             .anyRequest().authenticated()
                 );
                 http.authenticationProvider(authenticationProvider());
