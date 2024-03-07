@@ -1,4 +1,4 @@
-package com.zanchenko.alexey.authentication.models;
+package com.zanchenko.alex.diploma.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

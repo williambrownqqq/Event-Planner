@@ -1,4 +1,4 @@
-package com.zanchenko.alexey.authentication.controller;
+package com.zanchenko.alex.diploma.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;

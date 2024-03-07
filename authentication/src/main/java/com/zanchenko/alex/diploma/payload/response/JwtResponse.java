@@ -1,4 +1,4 @@
-package com.zanchenko.alexey.authentication.payload.response;
+package com.zanchenko.alex.diploma.payload.response;
 
 import java.util.List;
 

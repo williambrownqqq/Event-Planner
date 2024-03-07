@@ -1,6 +1,6 @@
-package com.zanchenko.alexey.authentication.security.jwt;
+package com.zanchenko.alex.diploma.security.jwt;
 
-import com.zanchenko.alexey.authentication.security.services.UserDetailsServiceImpl;
+import com.zanchenko.alex.diploma.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +45,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     } catch (Exception e) {
-      logger.error("Cannot set user authentication: {}", e);
+      logger.error("Cannot set user diploma: {}", e);
     }
 
     filterChain.doFilter(request, response);

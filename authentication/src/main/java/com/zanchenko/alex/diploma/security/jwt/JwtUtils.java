@@ -1,6 +1,6 @@
-package com.zanchenko.alexey.authentication.security.jwt;
+package com.zanchenko.alex.diploma.security.jwt;
 
-import com.zanchenko.alexey.authentication.security.services.UserDetailsImpl;
+import com.zanchenko.alex.diploma.security.services.UserDetailsImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -24,10 +24,10 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${alexey.app.jwtSecret}")
+    @Value("${alex.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${alexey.app.jwtExpirationMs}")
+    @Value("${alex.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {

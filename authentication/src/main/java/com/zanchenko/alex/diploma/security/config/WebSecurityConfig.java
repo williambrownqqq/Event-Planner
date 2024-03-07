@@ -1,8 +1,8 @@
-package com.zanchenko.alexey.authentication.security.config;
+package com.zanchenko.alex.diploma.security.config;
 
-import com.zanchenko.alexey.authentication.security.jwt.AuthEntryPointJwt;
-import com.zanchenko.alexey.authentication.security.jwt.AuthTokenFilter;
-import com.zanchenko.alexey.authentication.security.services.UserDetailsServiceImpl;
+import com.zanchenko.alex.diploma.security.jwt.AuthEntryPointJwt;
+import com.zanchenko.alex.diploma.security.jwt.AuthTokenFilter;
+import com.zanchenko.alex.diploma.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

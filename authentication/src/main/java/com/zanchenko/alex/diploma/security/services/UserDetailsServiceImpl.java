@@ -1,7 +1,7 @@
-package com.zanchenko.alexey.authentication.security.services;
+package com.zanchenko.alex.diploma.security.services;
 
-import com.zanchenko.alexey.authentication.models.User;
-import com.zanchenko.alexey.authentication.repository.UserRepository;
+import com.zanchenko.alex.diploma.models.User;
+import com.zanchenko.alex.diploma.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

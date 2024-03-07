@@ -1,4 +1,4 @@
-package com.zanchenko.alexey.authentication.security.jwt;
+package com.zanchenko.alex.diploma.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

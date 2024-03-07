@@ -1,4 +1,4 @@
-package com.zanchenko.alexey.authentication.payload.request;
+package com.zanchenko.alex.diploma.payload.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

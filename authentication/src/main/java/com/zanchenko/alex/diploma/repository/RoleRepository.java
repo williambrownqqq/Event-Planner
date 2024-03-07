@@ -1,7 +1,7 @@
-package com.zanchenko.alexey.authentication.repository;
+package com.zanchenko.alex.diploma.repository;
 
-import com.zanchenko.alexey.authentication.models.ERole;
-import com.zanchenko.alexey.authentication.models.Role;
+import com.zanchenko.alex.diploma.models.ERole;
+import com.zanchenko.alex.diploma.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

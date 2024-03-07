@@ -1,4 +1,4 @@
-package com.zanchenko.alexey.authentication.models;
+package com.zanchenko.alex.diploma.models;
 
 public enum ERole {
   ROLE_USER,
