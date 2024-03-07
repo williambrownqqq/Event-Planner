@@ -1,6 +1,5 @@
 package com.zanchenko.alex.diploma.domain.autentication;
 
-import com.zanchenko.alex.diploma.domain.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
