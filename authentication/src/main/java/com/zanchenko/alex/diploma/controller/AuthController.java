@@ -4,7 +4,7 @@ import com.zanchenko.alex.diploma.domain.autentication.ERole;
 import com.zanchenko.alex.diploma.domain.autentication.Role;
 import com.zanchenko.alex.diploma.domain.autentication.User;
 import com.zanchenko.alex.diploma.payload.request.LoginRequest;
-import com.zanchenko.alex.diploma.payload.request.SignupRequest;
+import com.zanchenko.alex.diploma.payload.request.SignUpRequest;
 import com.zanchenko.alex.diploma.payload.response.JwtResponse;
 import com.zanchenko.alex.diploma.payload.response.MessageResponse;
 import com.zanchenko.alex.diploma.repository.RoleRepository;
@@ -73,7 +73,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if (userService.existByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()

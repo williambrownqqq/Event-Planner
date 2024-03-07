@@ -14,7 +14,6 @@ import lombok.Setter;
 
 /**
  * Represents a role that a user can have within the application.
- * Extends {@link BaseEntity} for persistence.
  *
  * @author Alex Zanchenko
  */
