@@ -1,7 +1,7 @@
 package com.zanchenko.alex.diploma.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.zanchenko.alex.diploma.models.User;
+import com.zanchenko.alex.diploma.domain.autentication.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

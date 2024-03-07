@@ -1,6 +1,6 @@
 package com.zanchenko.alex.diploma.security.services;
 
-import com.zanchenko.alex.diploma.models.User;
+import com.zanchenko.alex.diploma.domain.autentication.User;
 import com.zanchenko.alex.diploma.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

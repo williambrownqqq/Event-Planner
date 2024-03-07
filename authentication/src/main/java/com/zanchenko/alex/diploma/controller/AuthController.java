@@ -1,8 +1,8 @@
 package com.zanchenko.alex.diploma.controller;
 
-import com.zanchenko.alex.diploma.models.ERole;
-import com.zanchenko.alex.diploma.models.Role;
-import com.zanchenko.alex.diploma.models.User;
+import com.zanchenko.alex.diploma.domain.autentication.ERole;
+import com.zanchenko.alex.diploma.domain.autentication.Role;
+import com.zanchenko.alex.diploma.domain.autentication.User;
 import com.zanchenko.alex.diploma.payload.request.LoginRequest;
 import com.zanchenko.alex.diploma.payload.request.SignupRequest;
 import com.zanchenko.alex.diploma.payload.response.JwtResponse;
