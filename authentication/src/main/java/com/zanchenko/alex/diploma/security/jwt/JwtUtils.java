@@ -1,5 +1,6 @@
 package com.zanchenko.alex.diploma.security.jwt;
 
+import com.zanchenko.alex.diploma.security.services.UserDetailsImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -26,7 +27,7 @@ public class JwtUtils {
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication){
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        UserDetails userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
