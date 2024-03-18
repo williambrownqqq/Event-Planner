@@ -51,7 +51,32 @@ public enum EventState {
     /**
      * Event completed.
      */
-    DONE("done");
+    DONE("done"),
+
+    /**
+     * Event scheduled to occur.
+     */
+    SCHEDULED("scheduled"),
+
+    /**
+     * Event related to training.
+     */
+    TRAINING("training"),
+
+    /**
+     * Event related to exercise.
+     */
+    EXERCISE("exercise"),
+
+    /**
+     * Event that is planned.
+     */
+    PLANNED("planned"),
+
+    /**
+     * Event that is part of a routine.
+     */
+    ROUTINE("routine");
 
     private final String displayName;
 }

@@ -74,6 +74,8 @@ public class WebSecurityConfig{
 //                        .requestMatchers(antMatcher("/api/test/**")).permitAll()
                       .requestMatchers(mvcMatcherBuilder.pattern("/api/auth/**")).permitAll()
                       .requestMatchers(mvcMatcherBuilder.pattern("/api/test/**")).permitAll()
+                      .requestMatchers(mvcMatcherBuilder.pattern("/events/**")).permitAll()
+                      .requestMatchers(mvcMatcherBuilder.pattern("/facilities/**")).permitAll()
                             .anyRequest().authenticated()
                 );
                 http.authenticationProvider(authenticationProvider());

@@ -91,4 +91,5 @@ public class FacilityServiceImpl implements FacilityService {
                 .toList();
         return mapToEventDTO(events).stream().toList();
     }
+
 }

@@ -32,7 +32,7 @@ import static com.zanchenko.alex.diploma.mapper.EventMapper.mapToEvent;
 
 @Slf4j
 @Validated
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/events")
 @RequiredArgsConstructor
@@ -43,9 +43,6 @@ public class EventController {
     @GetMapping
     public ResponseEntity<Map<String, Object>> getAllEvents(){
         List<EventDTO> events = eventService.getAllEvents();
-//        List<Event> events = eventDTOS.stream()
-//                .map(EventMapper::mapToEvent)
-//                .toList();
         Map<String, Object> response = new HashMap<>();
         response.put("events", events);
       return ResponseEntity.ok(response);

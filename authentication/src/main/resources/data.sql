@@ -1,13 +1,13 @@
 use diploma;
-insert into roles(id, name) values(1, "ROLE_USER"),
-(2, "ROLE_MODERATOR"),
-(3, "ROLE_ADMIN");
+--insert into roles(id, name) values(1, "ROLE_USER"),
+--(2, "ROLE_MODERATOR"),
+--(3, "ROLE_ADMIN");
 
-insert into facility (facility_title, photo_url, description) values ('Facility 1', 'photo1.jpg', 'Description of Facility 1');
-insert into facility (facility_title, photo_url, description) values ('Facility 2', 'photo2.jpg', 'Description of Facility 2');
-insert into facility (facility_title, photo_url, description) values ('Facility 3', 'photo3.jpg', 'Description of Facility 3');
-insert into facility (facility_title, photo_url, description) values ('Facility 4', 'photo4.jpg', 'Description of Facility 4');
-insert into facility (facility_title, photo_url, description) values ('Facility 5', 'photo5.jpg', 'Description of Facility 5');
+--insert into facility (facility_title, photo_url, description) values ('Facility 1', 'photo1.jpg', 'Description of Facility 1');
+--insert into facility (facility_title, photo_url, description) values ('Facility 2', 'photo2.jpg', 'Description of Facility 2');
+--insert into facility (facility_title, photo_url, description) values ('Facility 3', 'photo3.jpg', 'Description of Facility 3');
+--insert into facility (facility_title, photo_url, description) values ('Facility 4', 'photo4.jpg', 'Description of Facility 4');
+--insert into facility (facility_title, photo_url, description) values ('Facility 5', 'photo5.jpg', 'Description of Facility 5');
 --
 --INSERT INTO event (event_title, photo_url, event_description, event_location, facility_id, event_date, urgency, event_type, action, open_event_date, closed_event_date) VALUES ('Event 1', 'event_photo1.jpg', 'Description of Event 1', 'Location 1', 1, '2024-02-21', 'HIGH', 'TYPE_A', 'ACTION_A', '2024-02-21 10:00:00', '2024-02-21 12:00:00');
 --INSERT INTO event (event_title, photo_url, event_description, event_location, facility_id, event_date, urgency, event_type, action, open_event_date, closed_event_date) VALUES ('Event 2', 'event_photo2.jpg', 'Description of Event 2', 'Location 2', 2, '2024-02-22', 'MEDIUM', 'TYPE_B', 'ACTION_B', '2024-02-22 11:00:00', '2024-02-22 13:00:00');

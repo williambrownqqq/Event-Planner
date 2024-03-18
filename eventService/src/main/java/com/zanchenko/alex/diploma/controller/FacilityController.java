@@ -54,6 +54,11 @@ public class FacilityController {
         return facilityService.getFacilityById(facilityID);
     }
 
+    @GetMapping("/{facilityID}/events")
+    public List<EventDTO> getEventsByFacility(@PathVariable("facilityID") Long facilityID){
+        return facilityService.findAllEventsByFacility(facilityID);
+    }
+
     @PostMapping("/new")
     public ResponseEntity<?> createFacility(@Valid @RequestBody FacilityDTO facilityDTO,
                                             BindingResult result){
@@ -69,10 +74,7 @@ public class FacilityController {
 
     }
 
-    @GetMapping("/{facilityID}/events")
-    public List<EventDTO> getEventsByFacility(@PathVariable("facilityID") Long facilityID){
-        return facilityService.findAllEventsByFacility(facilityID);
-    }
+
 
 
     @GetMapping("/{facilityID}/edit")
@@ -106,6 +108,4 @@ public class FacilityController {
     public List<FacilityDTO> searchFacility(@RequestParam(value = "query") String query){
         return facilityService.searchFacilities(query);
     }
-
-
 }
