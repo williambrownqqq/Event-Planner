@@ -41,12 +41,12 @@ public enum EventState {
     /**
      * Event currently in progress.
      */
-    IN_PROGRESS("in progress"),
+    IN_PROGRESS("in_progress"),
 
     /**
      * Event currently in review.
      */
-    IN_REVIEW("in review"),
+    IN_REVIEW("in_review"),
 
     /**
      * Event completed.

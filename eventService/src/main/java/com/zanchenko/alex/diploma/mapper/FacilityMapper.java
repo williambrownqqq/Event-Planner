@@ -30,14 +30,23 @@ public class FacilityMapper {
 
     public static Facility mapToFacility(FacilityDTO facilityDTO){
         List<EventDTO> eventDTOs = facilityDTO.getEvents().stream().toList();
-        Set<Event> events = eventDTOs.stream()
-                .map(EventMapper::mapTOEventForTask)
-                .collect(Collectors.toSet());
+//        Set<Event> events = eventDTOs.stream()
+//                .map(EventMapper::mapTOEventForTask)
+//                .collect(Collectors.toSet());
         return Facility.builder()
                 .facilityTitle(facilityDTO.getFacilityTitle())
                 .photoURL(facilityDTO.getPhotoURL())
                 .description(facilityDTO.getDescription())
-                .events(events)
+                //.events(events)
                 .build();
     }
+
+    private static Facility mapToFacilityforEventForm(FacilityDTO facilityDTO) {
+        return Facility.builder()
+                .facilityTitle(facilityDTO.getFacilityTitle())
+                .photoURL(facilityDTO.getPhotoURL())
+                .description(facilityDTO.getDescription())
+                .build();
+    }
+
 }

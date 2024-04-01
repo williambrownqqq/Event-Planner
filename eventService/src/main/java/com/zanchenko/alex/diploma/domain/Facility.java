@@ -36,10 +36,10 @@ public class Facility extends BaseEntity{
     @Column(name = "facility_title")
     String facilityTitle;
 
-    @Column(name = "photo_url", length = 500)
+    @Column(name = "photo_url", length = 5000)
     String photoURL;
 
-    @Column(name = "description")
+    @Column(name = "description",length = 50000)
     String description;
 
     @OneToMany( mappedBy = "facility", cascade = CascadeType.ALL)

@@ -27,8 +27,8 @@ public interface FacilityClient {
     @GetMapping("/{facilityID}")
     Object getFacilityDetails(@PathVariable(value = "facilityID") Long facilityID);
 
-//    @PostMapping("/new")
-//    ResponseEntity<?> createFacility(@Valid @RequestBody FacilityDTO facilityDTO, BindingResult result);
+    @PostMapping("/new")
+    ResponseEntity<?> createFacility(@Valid @RequestBody FacilityDTO facilityDTO);
 
 //    @GetMapping("/{facilityID}/events")
 //    List<Object> getEventsByFacility(@PathVariable("facilityID") Long facilityID);

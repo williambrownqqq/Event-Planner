@@ -36,7 +36,7 @@ public class EventDTO {
     LocalDate eventDate;
     Urgency urgency;
     EventType eventType;
-    EventState action;
+    EventState eventState;
     LocalDate openEventDate;
     LocalDate closedEventDate;
     List<TaskDTO> tasks;

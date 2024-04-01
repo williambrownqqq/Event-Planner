@@ -16,7 +16,7 @@ public class TaskMapper {
                 .taskTitle(taskDTO.getTaskTitle())
                 .taskDescription(taskDTO.getTaskDescription())
                 .deadline(taskDTO.getDeadline())
-                .event(mapTOEventForTask(taskDTO.getEventDTO()))
+                //.event(mapTOEventForTask(taskDTO.getEventDTO()))
                 .build();
     }
     public static TaskDTO mapToTaskDTO(Task task){

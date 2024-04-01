@@ -60,15 +60,14 @@ public class FacilityController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createFacility(@Valid @RequestBody FacilityDTO facilityDTO,
-                                            BindingResult result){
-        if(result.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            for(FieldError error: result.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<?> createFacility(@Valid @RequestBody FacilityDTO facilityDTO){
+//        if(result.hasErrors()) {
+//            Map<String, String> errors = new HashMap<>();
+//            for(FieldError error: result.getFieldErrors()) {
+//                errors.put(error.getField(), error.getDefaultMessage());
+//            }
+//            return ResponseEntity.badRequest().body(errors);
+//        }
         Facility savedFacility = mapToFacility(facilityService.saveFacility(facilityDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFacility);
 

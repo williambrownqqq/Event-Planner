@@ -1,11 +1,13 @@
 package com.zanchenko.alex.diploma.mapper;
 
 import com.zanchenko.alex.diploma.domain.Event;
+import com.zanchenko.alex.diploma.domain.Facility;
 import com.zanchenko.alex.diploma.domain.Task;
 import com.zanchenko.alex.diploma.domain.enumeration.EventType;
 import com.zanchenko.alex.diploma.dto.EventDTO;
 import com.zanchenko.alex.diploma.dto.TaskDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +30,7 @@ public class EventMapper {
                 .eventDate(event.getEventDate())
                 .urgency(event.getUrgency())
                 .eventType(event.getEventType())
-                .action(event.getAction())
+                .eventState(event.getEventState())
                 .openEventDate(event.getOpenEventDate())
                 .closedEventDate(event.getClosedEventDate())
                 .tasks(mapToTaskDTO(event.getTasks()))
@@ -64,24 +66,31 @@ public class EventMapper {
     }
 
     public static Event mapToEvent(EventDTO eventDTO){
-        List<TaskDTO> taskDTOs = eventDTO.getTasks().stream().toList();
-        List<Task> tasks = taskDTOs.stream()
-                .map(TaskMapper::mapToTask)
-                .toList();
+        List<Task> tasks = new ArrayList<>();
+        if (eventDTO.getTasks() != null) {
+            tasks = eventDTO.getTasks().stream()
+                    .map(TaskMapper::mapToTask)
+                    .toList();
+        }
+        Facility facility = mapToFacility(eventDTO.getFacilityDTO());
+        facility.setId(eventDTO.getFacilityDTO().getId());
+//        List<TaskDTO> taskDTOs = eventDTO.getTasks().stream().toList();
+//        List<Task> tasks = taskDTOs.stream()
+//                .map(TaskMapper::mapToTask)
+//                .toList();
         return Event.builder()
                 .eventTitle(eventDTO.getEventTitle())
                 .eventDescription(eventDTO.getEventDescription())
                 .photoURL(eventDTO.getPhotoURL())
                 .eventLocation(eventDTO.getEventLocation())
-                .facility(mapToFacility(eventDTO.getFacilityDTO()))
+                .facility(facility)
                 .eventDate(eventDTO.getEventDate())
                 .urgency(eventDTO.getUrgency())
                 .eventType(eventDTO.getEventType())
-                .action(eventDTO.getAction())
+                .eventState(eventDTO.getEventState())
                 .openEventDate(eventDTO.getOpenEventDate())
                 .closedEventDate(eventDTO.getClosedEventDate())
                 .tasks(tasks)
-
                 .build();
 
     }
@@ -99,7 +108,7 @@ public class EventMapper {
                 .eventDate(eventDTO.getEventDate())
                 .urgency(eventDTO.getUrgency())
                 .eventType(eventDTO.getEventType())
-                .action(eventDTO.getAction())
+                .eventState(eventDTO.getEventState())
                 .openEventDate(eventDTO.getOpenEventDate())
                 .closedEventDate(eventDTO.getClosedEventDate())
                 .tasks(tasks)

@@ -54,16 +54,16 @@ public class EventController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createEvent(@Valid @RequestBody EventDTO eventDTO,
-                                                           BindingResult result){
-        if(result.hasErrors()){
-            Map<String, String> errors = new HashMap<>();
-            for(FieldError error : result.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
-        Event savedEvent = mapToEvent(eventService.saveEvent(eventDTO));
+    public ResponseEntity<?> createEvent(@Valid @RequestBody EventDTO eventDTO){
+//        if(result.hasErrors()){
+//            Map<String, String> errors = new HashMap<>();
+//            for(FieldError error : result.getFieldErrors()) {
+//                errors.put(error.getField(), error.getDefaultMessage());
+//            }
+//            return ResponseEntity.badRequest().body(errors);
+//        }
+//        Event savedEvent = mapToEvent(eventService.saveEvent(eventDTO));
+        Event savedEvent = eventService.saveEvent(eventDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
     }
 

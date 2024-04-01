@@ -1,5 +1,6 @@
 package com.zanchenko.alex.diploma.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zanchenko.alex.diploma.domain.enumeration.EventState;
 import com.zanchenko.alex.diploma.domain.enumeration.EventType;
@@ -71,9 +72,9 @@ public class Event extends BaseEntity {
     @Enumerated(EnumType.STRING)
     EventType eventType;
 
-    @Column(name = "action")
+    @Column(name = "event_state")
     @Enumerated(EnumType.STRING)
-    EventState action;
+    EventState eventState;
 
     @Column(name = "open_event_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")

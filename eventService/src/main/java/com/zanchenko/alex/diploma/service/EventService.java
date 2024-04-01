@@ -9,7 +9,7 @@ public interface EventService{
 
     List<EventDTO> getAllEvents();
 
-    EventDTO saveEvent(EventDTO eventDTO);
+    Event saveEvent(EventDTO eventDTO);
 
     EventDTO getEventByID(Long EventID);
 

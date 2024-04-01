@@ -1,6 +1,8 @@
 package com.zanchenko.alex.diploma.service.impl;
 
 import com.zanchenko.alex.diploma.domain.Event;
+import com.zanchenko.alex.diploma.domain.Facility;
+import com.zanchenko.alex.diploma.domain.Task;
 import com.zanchenko.alex.diploma.dto.EventDTO;
 import com.zanchenko.alex.diploma.exception.BadRequestException;
 import com.zanchenko.alex.diploma.mapper.EventMapper;
@@ -33,9 +35,17 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDTO saveEvent(EventDTO eventDTO) {
-        eventRepository.save(mapToEvent(eventDTO));
-        return eventDTO;
+    @Transactional
+    public Event saveEvent(EventDTO eventDTO) {
+        Event event = mapToEvent(eventDTO);
+        eventRepository.save(event);
+
+        List<Task> tasks = event.getTasks();
+        List<Task> savedTasks = tasks.stream()
+                .peek(task -> task.setEvent(event))
+                .map(taskRepository::save)
+                .toList();
+        return event;
     }
 
     @Override
