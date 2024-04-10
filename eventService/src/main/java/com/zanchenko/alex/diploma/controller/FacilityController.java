@@ -1,13 +1,13 @@
 package com.zanchenko.alex.diploma.controller;
 
 import com.zanchenko.alex.diploma.domain.Facility;
+import com.zanchenko.alex.diploma.domain.network.Response;
 import com.zanchenko.alex.diploma.dto.EventDTO;
 import com.zanchenko.alex.diploma.dto.FacilityDTO;
 import com.zanchenko.alex.diploma.service.FacilityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -60,21 +60,25 @@ public class FacilityController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createFacility(@Valid @RequestBody FacilityDTO facilityDTO){
-//        if(result.hasErrors()) {
-//            Map<String, String> errors = new HashMap<>();
-//            for(FieldError error: result.getFieldErrors()) {
-//                errors.put(error.getField(), error.getDefaultMessage());
-//            }
-//            return ResponseEntity.badRequest().body(errors);
-//        }
+    public ResponseEntity<Response> createFacility(@Valid @RequestBody FacilityDTO facilityDTO,
+                                                   BindingResult result){
+        Response response = new Response();
+
+        if(result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for(FieldError error: result.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            response.setErrors(errors);
+            return ResponseEntity.badRequest().body(response);
+        }
         Facility savedFacility = mapToFacility(facilityService.saveFacility(facilityDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedFacility);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(savedFacility);
+
+        response.setMessage("Facility has been successfully created!");
+        return ResponseEntity.ok(response);
 
     }
-
-
-
 
     @GetMapping("/{facilityID}/edit")
     @ResponseBody
@@ -84,21 +88,25 @@ public class FacilityController {
 
     @PutMapping("/{facilityID}/edit")
     @ResponseBody
-    public ResponseEntity<?> updateFacility(@PathVariable("facilityID") Long facilityID,
-                                            @Valid @RequestBody FacilityDTO facilityDTO,
-                                            BindingResult result){
+    public ResponseEntity<Response> updateFacility(@PathVariable("facilityID") Long facilityID,
+                                                   @Valid @RequestBody FacilityDTO facilityDTO,
+                                                   BindingResult result){
+        Response response = new Response();
+
         if(result.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
             for (FieldError error: result.getFieldErrors()){
                 errors.put(error.getField(), error.getDefaultMessage());
             }
-            return ResponseEntity.badRequest().body(errors);
+            response.setErrors(errors);
+            return ResponseEntity.badRequest().body(response);
         }
         facilityService.updateFacility(facilityID, facilityDTO);
-        return ResponseEntity.ok("Facility has been successfully updated!");
+        response.setMessage("Facility has been successfully updated!");
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{facilityID}")
+    @DeleteMapping("/{facilityID}/delete")
     public void deleteFacility(@PathVariable Long facilityID){
         facilityService.deleteFacility(facilityID);
     }

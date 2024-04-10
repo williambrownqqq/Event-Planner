@@ -1,8 +1,7 @@
 package com.zanchenko.alex.diploma.client;
 
 import com.zanchenko.alex.diploma.domain.events.EventDTO;
-import com.zanchenko.alex.diploma.domain.events.FacilityDTO;
-import feign.RequestLine;
+import com.zanchenko.alex.diploma.domain.network.Response;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.CollectionFormat;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -29,9 +28,16 @@ public interface EventClient {
     Object getEventDetails(@PathVariable(value = "eventID") Long eventID);
 
     @PostMapping("/new")
-    ResponseEntity<?> createEvent(@Valid @RequestBody EventDTO eventDTO);
+    ResponseEntity<Response> createEvent(@Valid @RequestBody EventDTO eventDTO);
 
-    @DeleteMapping("/{eventID}")
+    @GetMapping("/{eventID}/edit")
+    Object updateEventForm(@PathVariable("eventID") Long eventID);
+
+    @PutMapping("/{eventID}/edit")
+    ResponseEntity<Response> updateEvent(@PathVariable("eventID") Long eventID,
+                                         @Valid @RequestBody Object eventDTO);
+
+    @DeleteMapping("/{eventID}/delete")
     void deleteEvent(@PathVariable(value = "eventID") Long eventID);
 
     @GetMapping("/search")

@@ -1,12 +1,12 @@
 package com.zanchenko.alex.diploma.controller;
 
 import com.zanchenko.alex.diploma.domain.Event;
+import com.zanchenko.alex.diploma.domain.network.Response;
 import com.zanchenko.alex.diploma.dto.EventDTO;
 import com.zanchenko.alex.diploma.service.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.zanchenko.alex.diploma.mapper.EventMapper.mapToEvent;
 
 @Slf4j
 @Validated
@@ -54,17 +52,21 @@ public class EventController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createEvent(@Valid @RequestBody EventDTO eventDTO){
-//        if(result.hasErrors()){
-//            Map<String, String> errors = new HashMap<>();
-//            for(FieldError error : result.getFieldErrors()) {
-//                errors.put(error.getField(), error.getDefaultMessage());
-//            }
-//            return ResponseEntity.badRequest().body(errors);
-//        }
-//        Event savedEvent = mapToEvent(eventService.saveEvent(eventDTO));
-        Event savedEvent = eventService.saveEvent(eventDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
+    public ResponseEntity<Response> createEvent(@Valid @RequestBody EventDTO eventDTO,
+                                                BindingResult result){
+        Response response = new Response();
+
+        if(result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for(FieldError error: result.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            response.setErrors(errors);
+            return ResponseEntity.badRequest().body(response);
+        }
+        eventService.saveEvent(eventDTO);
+        response.setMessage("Event has been successfully created!");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{eventID}/edit")
@@ -74,18 +76,22 @@ public class EventController {
     }
 
     @PutMapping("/{eventID}/edit")
-    public ResponseEntity<?> updateEventDetails(@PathVariable("eventID") Long eventID,
+    public ResponseEntity<Response> updateEvent(@PathVariable("eventID") Long eventID,
                                  @Valid @RequestBody EventDTO eventDTO,
                                  BindingResult result){
+        Response response = new Response();
+
         if(result.hasErrors()){
             Map<String, String> errors = new HashMap<>();
             for (FieldError error : result.getFieldErrors()){
                 errors.put(error.getField(), error.getDefaultMessage());
             }
-            return ResponseEntity.badRequest().body(errors);
+            response.setErrors(errors);
+            return ResponseEntity.badRequest().body(response);
         }
         eventService.updateEvent(eventID, eventDTO);
-        return ResponseEntity.ok("Event has been successfully updated");
+        response.setMessage("Event has been successfully updated!");
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{eventID}/delete")

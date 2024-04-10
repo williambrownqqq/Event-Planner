@@ -8,6 +8,7 @@ import com.zanchenko.alex.diploma.mapper.EventMapper;
 import com.zanchenko.alex.diploma.mapper.FacilityMapper;
 import com.zanchenko.alex.diploma.repository.EventRepository;
 import com.zanchenko.alex.diploma.repository.FacilityRepository;
+import com.zanchenko.alex.diploma.repository.TaskRepository;
 import com.zanchenko.alex.diploma.service.FacilityService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.zanchenko.alex.diploma.mapper.EventMapper.mapToEventDTO;
 import static com.zanchenko.alex.diploma.mapper.FacilityMapper.mapToFacility;
 import static com.zanchenko.alex.diploma.mapper.FacilityMapper.mapToFacilityDTO;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -27,6 +31,7 @@ public class FacilityServiceImpl implements FacilityService {
 
     private final FacilityRepository facilityRepository;
     private final EventRepository eventRepository;
+    private final TaskRepository taskRepository;
 
     @Override
     public List<FacilityDTO> getAllFacilities() {
@@ -70,7 +75,16 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     public void deleteFacility(Long facilityID) {
         if(facilityRepository.existsById(facilityID)){
-            facilityRepository.deleteById(facilityID);
+            Facility facility = facilityRepository.findById(facilityID)
+                    .orElseThrow(() -> new EntityNotFoundException("No facility with id: " + facilityID));
+            // Delete all tasks associated with events of this facility
+            facility.getEvents().forEach(event -> event.getTasks().forEach(taskRepository::delete));
+
+            facility.getEvents().stream()   // Use a stream to delete all associated events
+                    .filter(event -> event.getFacility().getId().equals(facilityID))
+                    .forEach(eventRepository::delete); // This deletes each event using the eventRepository
+
+            facilityRepository.deleteById(facilityID);   // Now you can safely delete the facility
         } else {
             throw new EntityNotFoundException("No facility with id: " + facilityID);
         }

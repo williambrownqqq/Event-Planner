@@ -12,11 +12,11 @@ import static com.zanchenko.alex.diploma.mapper.EventMapper.mapToEventDTOforTask
 public class TaskMapper {
 
     public static Task mapToTask(TaskDTO taskDTO){
+
         return Task.builder()
                 .taskTitle(taskDTO.getTaskTitle())
                 .taskDescription(taskDTO.getTaskDescription())
-                .deadline(taskDTO.getDeadline())
-                //.event(mapTOEventForTask(taskDTO.getEventDTO()))
+                //.deadline(taskDTO.getDeadline())
                 .build();
     }
     public static TaskDTO mapToTaskDTO(Task task){

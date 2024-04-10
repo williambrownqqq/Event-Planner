@@ -66,19 +66,17 @@ public class EventMapper {
     }
 
     public static Event mapToEvent(EventDTO eventDTO){
-        List<Task> tasks = new ArrayList<>();
-        if (eventDTO.getTasks() != null) {
-            tasks = eventDTO.getTasks().stream()
-                    .map(TaskMapper::mapToTask)
-                    .toList();
-        }
+//        List<Task> tasks = new ArrayList<>();
+//        if (eventDTO.getTasks() != null) {
+//            tasks = eventDTO.getTasks().stream()
+//                    .map(TaskMapper::mapToTask)
+//                    .toList();
+//        }
         Facility facility = mapToFacility(eventDTO.getFacilityDTO());
         facility.setId(eventDTO.getFacilityDTO().getId());
-//        List<TaskDTO> taskDTOs = eventDTO.getTasks().stream().toList();
-//        List<Task> tasks = taskDTOs.stream()
-//                .map(TaskMapper::mapToTask)
-//                .toList();
+
         return Event.builder()
+
                 .eventTitle(eventDTO.getEventTitle())
                 .eventDescription(eventDTO.getEventDescription())
                 .photoURL(eventDTO.getPhotoURL())
@@ -90,7 +88,7 @@ public class EventMapper {
                 .eventState(eventDTO.getEventState())
                 .openEventDate(eventDTO.getOpenEventDate())
                 .closedEventDate(eventDTO.getClosedEventDate())
-                .tasks(tasks)
+//                .tasks(tasks)
                 .build();
 
     }

@@ -1,33 +1,34 @@
 package com.zanchenko.alex.diploma.controller.authentication.eventSevice;
 
 
+import com.github.dockerjava.api.model.Bind;
 import com.zanchenko.alex.diploma.client.EventClient;
 import com.zanchenko.alex.diploma.domain.events.EventDTO;
-import jakarta.servlet.http.HttpServletRequest;
+import com.zanchenko.alex.diploma.domain.events.FacilityDTO;
+import com.zanchenko.alex.diploma.domain.network.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-//@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventController {
@@ -46,14 +47,54 @@ public class EventController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createEvent(@Valid @RequestBody EventDTO eventDTO){
+    public ResponseEntity<Response> createEvent(@Valid @RequestBody EventDTO eventDTO,
+                                                BindingResult result){
+        Response response = new Response();
+
+        if(result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError error: result.getFieldErrors()){
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            response.setErrors(errors);
+            return ResponseEntity.badRequest().body(response);
+        }
         return eventClient.createEvent(eventDTO);
     }
 
-    @DeleteMapping("/{facilityID}")
+    @GetMapping("/{eventID}/edit")
+    @ResponseBody
+    public Object updateEventForm(@PathVariable("eventID") Long eventID){
+        return eventClient.updateEventForm(eventID);
+    }
+
+    @PutMapping("/{eventID}/edit")
+    public ResponseEntity<Response> updateEvent(@PathVariable("eventID") Long eventID,
+                                                @Valid @RequestBody EventDTO eventDTO,
+                                                BindingResult result){
+        Response response = new Response();
+
+        if(result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError error: result.getFieldErrors()){
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            response.setErrors(errors);
+            return ResponseEntity.badRequest().body(response);
+        }
+        return eventClient.updateEvent(eventID, eventDTO);
+    }
+
+    @DeleteMapping("/{eventID}/delete")
+    @ResponseBody
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public void deleteEvent(@PathVariable Long eventID){
-        eventClient.deleteEvent(eventID);
+    public ResponseEntity<?> deleteEvent(@PathVariable Long eventID) {
+        try {
+            eventClient.deleteEvent(eventID);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete event: " + e.getMessage());
+        }
     }
 
     @GetMapping("/search")
