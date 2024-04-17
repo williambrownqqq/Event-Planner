@@ -12,5 +12,6 @@
     <modules>
         <module>authentication</module>
         <module>eventService</module>
+        <module>ManagementService</module>
     </modules>
 </project>
