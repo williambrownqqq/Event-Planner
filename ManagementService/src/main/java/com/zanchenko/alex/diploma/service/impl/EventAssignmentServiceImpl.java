@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -48,6 +49,25 @@ public class EventAssignmentServiceImpl implements EventAssignmentService {
             if (!event.getExecutors().contains(executor.get())) {
                 // Add the user to the event's list of executors
                 event.getExecutors().add(executor.get());
+                eventRepository.save(event);
+            }
+        }
+    }
+
+    @Override
+    public void selfUnAssignExecute(Long userID, Long eventID) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventID);
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            Optional<User> executor = userRepository.findById(userID);
+            if (executor.isPresent() && event.getExecutors().contains(executor.get())) {
+                // Filter out the user with the given userID and collect the result into a new list
+                List<User> updatedExecutors = event.getExecutors().stream()
+                        .filter(user -> !user.getId().equals(userID))
+                        .collect(Collectors.toList());
+                // Update the executors list with the filtered list
+                event.setExecutors(updatedExecutors);
+                // Save the updated event within the same transaction
                 eventRepository.save(event);
             }
         }

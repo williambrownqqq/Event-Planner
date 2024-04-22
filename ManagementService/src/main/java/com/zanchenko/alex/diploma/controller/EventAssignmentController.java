@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,6 +65,25 @@ public class EventAssignmentController {
 
         assignmentService.selfAssignExecute(userID, eventID);
         response.setMessage("Self assign has been successfully done!");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{eventID}/self-unassign")
+    public ResponseEntity<Response> selfUnAssignToEvent(@PathVariable Long eventID,
+                                                      @RequestBody Long userID,
+                                                      BindingResult result) {
+        Response response = new Response();
+        if(result.hasErrors()){
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError error : result.getFieldErrors()){
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            response.setErrors(errors);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        assignmentService.selfUnAssignExecute(userID, eventID);
+        response.setMessage("Self unassign has been successfully done!");
         return ResponseEntity.ok(response);
     }
 }

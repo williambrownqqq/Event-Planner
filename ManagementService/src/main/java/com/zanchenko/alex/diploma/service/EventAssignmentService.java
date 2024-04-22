@@ -9,4 +9,6 @@ public interface EventAssignmentService {
     void assignExecutors(List<Long> userIDs, Long eventID);
 
     void selfAssignExecute(Long userID, Long eventID);
+
+    void selfUnAssignExecute(Long userID, Long eventID);
 }
