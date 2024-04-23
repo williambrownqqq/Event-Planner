@@ -9,11 +9,8 @@ public interface AdminBoardService {
 
     List<UserDTO> getUsers();
 
-    void promoteToModerator(Long userID);
+    void promote(Long userID);
 
-    void promoteToAdmin(Long userID);
+    void demote(Long userID);
 
-    void demoteToUser(Long userID);
-
-    void demoteToModerator(Long userID);
 }

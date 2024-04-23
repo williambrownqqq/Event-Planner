@@ -1,5 +1,8 @@
 package com.zanchenko.alex.diploma.service.impl;
 
+import com.zanchenko.alex.diploma.domain.autentication.ERole;
+import com.zanchenko.alex.diploma.domain.autentication.Role;
+import com.zanchenko.alex.diploma.domain.autentication.User;
 import com.zanchenko.alex.diploma.dto.UserDTO;
 import com.zanchenko.alex.diploma.mapper.UserMapper;
 import com.zanchenko.alex.diploma.repository.UserRepository;
@@ -8,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -23,22 +27,39 @@ public class AdminBoardServiceImpl implements AdminBoardService {
     }
 
     @Override
-    public void promoteToModerator(Long userID) {
-        userRepository.promoteUserToModerator(userID, 2L);
+    public void promote(Long userID) {
+
+        User user = userRepository.findById(userID).get();
+        Set<Role> roles = user.getRoles();
+        List<ERole> eroles = roles.stream()
+                .map(Role::getName)
+                .toList();
+
+        if(eroles.contains(ERole.ROLE_USER) && eroles.contains(ERole.ROLE_MODERATOR) && !user.getRoles().contains(ERole.ROLE_ADMIN)){
+            userRepository.promoteUserToAdmin(userID, 3L); // promote to admin
+        }
+        else if(eroles.contains(ERole.ROLE_USER) && !eroles.contains(ERole.ROLE_MODERATOR)){
+            userRepository.promoteUserToModerator(userID, 2L); // promote to moderator
+        }
+
     }
 
-    @Override
-    public void promoteToAdmin(Long userID) {
-        userRepository.promoteUserToAdmin(userID, 3L);
-    }
 
     @Override
-    public void demoteToUser(Long userID) {
-        userRepository.demoteUserToUser(userID, 2L);
+    public void demote(Long userID) {
+
+        User user = userRepository.findById(userID).get();
+        Set<Role> roles = user.getRoles();
+        List<ERole> eroles = roles.stream()
+                .map(Role::getName)
+                .toList();
+
+        if(eroles.contains(ERole.ROLE_USER) && eroles.contains(ERole.ROLE_ADMIN)){
+            userRepository.demoteUserToModerator(userID, 3L);  // demote back to moderator
+        }
+        else if(eroles.contains(ERole.ROLE_USER) && eroles.contains(ERole.ROLE_MODERATOR)){
+            userRepository.demoteUserToUser(userID, 2L); // demote back to user
+        }
     }
 
-    @Override
-    public void demoteToModerator(Long userID) {
-        userRepository.demoteUserToModerator(userID, 3L);
-    }
 }

@@ -25,28 +25,18 @@ public class AdminPanelController {
     private final AdminBoardService adminBoardService;
 
     @GetMapping("/get-users")
-    //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<UserDTO>> getUsers(){
+    public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(adminBoardService.getUsers());
     }
 
-    @PostMapping("/promote-to-moderator/{userID}")
-    public void promoteToModerator(@PathVariable("userID") Long userID){
-        adminBoardService.promoteToModerator(userID);
+    @GetMapping("/promote/{userID}")
+    public void promote(@PathVariable("userID") Long userID) {
+        adminBoardService.promote(userID);
     }
 
-    @PostMapping("/promote-to-admin/{userID}")
-    public void promoteToAdmin(@PathVariable("userID") Long userID){
-        adminBoardService.promoteToAdmin(userID);
-    }
 
-    @DeleteMapping("/demote-to-user/{userID}")
-    public void demoteToUser(@PathVariable("userID") Long userID){
-        adminBoardService.demoteToUser(userID);
-    }
-
-    @DeleteMapping("/demote-to-moderator/{userID}")
-    public void demoteToModerator(@PathVariable("userID") Long userID){
-        adminBoardService.demoteToModerator(userID);
+    @GetMapping("/demote/{userID}")
+    public void demote(@PathVariable("userID") Long userID) {
+        adminBoardService.demote(userID);
     }
 }
