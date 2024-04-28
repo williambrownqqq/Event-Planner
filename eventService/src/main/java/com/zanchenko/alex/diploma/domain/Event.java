@@ -2,6 +2,7 @@ package com.zanchenko.alex.diploma.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zanchenko.alex.diploma.domain.autentication.User;
 import com.zanchenko.alex.diploma.domain.enumeration.EventState;
 import com.zanchenko.alex.diploma.domain.enumeration.EventType;
 import com.zanchenko.alex.diploma.domain.enumeration.Urgency;
@@ -10,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -87,4 +90,10 @@ public class Event extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "event")
     List<Task> tasks = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "event_executors",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    List<User> executors = new ArrayList<>();
 }

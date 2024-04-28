@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import static com.zanchenko.alex.diploma.mapper.FacilityMapper.mapToFacility;
 import static com.zanchenko.alex.diploma.mapper.FacilityMapper.mapToFacilityDTO;
 import static com.zanchenko.alex.diploma.mapper.TaskMapper.mapToTaskDTO;
+import static com.zanchenko.alex.diploma.mapper.UserMapper.mapToUserDTO;
 import static java.util.stream.Collectors.toList;
 
 public class EventMapper {
@@ -34,6 +35,7 @@ public class EventMapper {
                 .openEventDate(event.getOpenEventDate())
                 .closedEventDate(event.getClosedEventDate())
                 .tasks(mapToTaskDTO(event.getTasks()))
+                .executors(mapToUserDTO(event.getExecutors()))
                 .build();
     }
 

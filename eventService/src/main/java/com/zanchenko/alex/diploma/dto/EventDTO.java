@@ -1,6 +1,7 @@
 package com.zanchenko.alex.diploma.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zanchenko.alex.diploma.domain.Event;
 import com.zanchenko.alex.diploma.domain.Facility;
 import com.zanchenko.alex.diploma.domain.Task;
 import com.zanchenko.alex.diploma.domain.enumeration.EventState;
@@ -40,4 +41,5 @@ public class EventDTO {
     LocalDate openEventDate;
     LocalDate closedEventDate;
     List<TaskDTO> tasks;
+    List<UserDTO> executors;
 }
