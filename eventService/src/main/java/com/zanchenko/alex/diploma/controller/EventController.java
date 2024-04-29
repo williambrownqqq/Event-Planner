@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class EventController {
 
     @PostMapping("/new")
     public ResponseEntity<Response> createEvent(@Valid @RequestBody EventDTO eventDTO,
-                                                BindingResult result){
+                                                BindingResult result) throws IOException {
         Response response = new Response();
 
         if(result.hasErrors()) {
@@ -78,7 +79,7 @@ public class EventController {
     @PutMapping("/{eventID}/edit")
     public ResponseEntity<Response> updateEvent(@PathVariable("eventID") Long eventID,
                                  @Valid @RequestBody EventDTO eventDTO,
-                                 BindingResult result){
+                                 BindingResult result) throws IOException {
         Response response = new Response();
 
         if(result.hasErrors()){
