@@ -2,6 +2,7 @@ package com.zanchenko.alex.diploma.controller;
 
 import com.zanchenko.alex.diploma.domain.Event;
 import com.zanchenko.alex.diploma.domain.Facility;
+import com.zanchenko.alex.diploma.domain.network.EventResponse;
 import com.zanchenko.alex.diploma.domain.network.Response;
 import com.zanchenko.alex.diploma.dto.EventDTO;
 import com.zanchenko.alex.diploma.dto.FacilityDTO;
@@ -81,13 +82,13 @@ public class EventController {
 //    }
 
     @PostMapping("/new")
-    public ResponseEntity<Response> createEvent(@RequestBody EventDTO eventDTO) throws IOException {
+    public ResponseEntity<EventResponse> createEvent(@RequestBody EventDTO eventDTO) throws IOException {
         // Perform manual validation
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<EventDTO>> violations = validator.validate(eventDTO);
 
-        Response response = new Response();
+        EventResponse response = new EventResponse();
 
         if (!violations.isEmpty()) {
             List<String> errorMessages = violations.stream()
@@ -98,10 +99,11 @@ public class EventController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        eventService.saveEvent(eventDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(savedFacility);
+        EventDTO savedEvent = eventService.saveEvent(eventDTO);
+
+        response.setEventDTO(savedEvent);
         response.setMessage("Event has been successfully created!");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{eventID}/edit")

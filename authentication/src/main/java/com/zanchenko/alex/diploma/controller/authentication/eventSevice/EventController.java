@@ -5,6 +5,7 @@ import com.github.dockerjava.api.model.Bind;
 import com.zanchenko.alex.diploma.client.EventClient;
 import com.zanchenko.alex.diploma.domain.events.EventDTO;
 import com.zanchenko.alex.diploma.domain.events.FacilityDTO;
+import com.zanchenko.alex.diploma.domain.network.EventResponse;
 import com.zanchenko.alex.diploma.domain.network.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -47,9 +48,9 @@ public class EventController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Response> createEvent(@Valid @RequestBody EventDTO eventDTO,
-                                                BindingResult result){
-        Response response = new Response();
+    public ResponseEntity<EventResponse> createEvent(@Valid @RequestBody EventDTO eventDTO,
+                                                     BindingResult result){
+        EventResponse response = new EventResponse();
 
         if(result.hasErrors()) {
             Map<String, String> errors = new HashMap<>();

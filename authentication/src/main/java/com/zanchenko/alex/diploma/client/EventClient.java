@@ -1,6 +1,7 @@
 package com.zanchenko.alex.diploma.client;
 
 import com.zanchenko.alex.diploma.domain.events.EventDTO;
+import com.zanchenko.alex.diploma.domain.network.EventResponse;
 import com.zanchenko.alex.diploma.domain.network.Response;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.CollectionFormat;
@@ -28,7 +29,7 @@ public interface EventClient {
     Object getEventDetails(@PathVariable(value = "eventID") Long eventID);
 
     @PostMapping("/new")
-    ResponseEntity<Response> createEvent(@Valid @RequestBody EventDTO eventDTO);
+    ResponseEntity<EventResponse> createEvent(@Valid @RequestBody EventDTO eventDTO);
 
     @GetMapping("/{eventID}/edit")
     Object updateEventForm(@PathVariable("eventID") Long eventID);

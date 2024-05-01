@@ -10,7 +10,7 @@ public interface EventService{
 
     List<EventDTO> getAllEvents();
 
-    Event saveEvent(EventDTO eventDTO) throws IOException;
+    EventDTO saveEvent(EventDTO eventDTO) throws IOException;
 
     EventDTO getEventByID(Long EventID);
 

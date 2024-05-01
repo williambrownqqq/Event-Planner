@@ -48,7 +48,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public Event saveEvent(EventDTO eventDTO) throws IOException {
+    public EventDTO saveEvent(EventDTO eventDTO) throws IOException {
         Event event = mapToEvent(eventDTO);
         List<Task> tasks = eventDTO.getTasks().stream() // map all tasks but without event
 //                .map(TaskMapper::mapToTask)
@@ -63,7 +63,7 @@ public class EventServiceImpl implements EventService {
         event.setTasks(tasks);
         eventRepository.save(event);
         mailService.sendEmail(event);
-        return event;
+        return eventDTO;
     }
 
     @Override
