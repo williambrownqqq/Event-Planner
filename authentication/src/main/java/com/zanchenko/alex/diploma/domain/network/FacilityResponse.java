@@ -1,19 +1,15 @@
 package com.zanchenko.alex.diploma.domain.network;
 
+import com.zanchenko.alex.diploma.dto.FacilityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Map;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Response {
-    private String message;
-    private List<String> errors;
-
+public class FacilityResponse extends Response{
+    private FacilityDTO facilityDTO;
 }

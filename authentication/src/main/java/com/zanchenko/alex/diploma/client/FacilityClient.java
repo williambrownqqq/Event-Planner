@@ -2,6 +2,7 @@ package com.zanchenko.alex.diploma.client;
 
 import com.zanchenko.alex.diploma.domain.events.EventDTO;
 import com.zanchenko.alex.diploma.domain.events.FacilityDTO;
+import com.zanchenko.alex.diploma.domain.network.FacilityResponse;
 import com.zanchenko.alex.diploma.domain.network.Response;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -27,7 +28,7 @@ public interface FacilityClient {
     Object getFacilityDetails(@PathVariable(value = "facilityID") Long facilityID);
 
     @PostMapping("/new")
-    ResponseEntity<Response> createFacility(@Valid @RequestBody FacilityDTO facilityDTO);
+    ResponseEntity<FacilityResponse> createFacility(@Valid @RequestBody FacilityDTO facilityDTO);
 
     @GetMapping("/{facilityID}/edit")
     Object updateFacilityForm(@PathVariable("facilityID") Long facilityID);

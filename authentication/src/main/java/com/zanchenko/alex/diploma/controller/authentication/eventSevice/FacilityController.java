@@ -3,6 +3,7 @@ package com.zanchenko.alex.diploma.controller.authentication.eventSevice;
 import com.zanchenko.alex.diploma.client.FacilityClient;
 import com.zanchenko.alex.diploma.domain.events.EventDTO;
 import com.zanchenko.alex.diploma.domain.events.FacilityDTO;
+import com.zanchenko.alex.diploma.domain.network.FacilityResponse;
 import com.zanchenko.alex.diploma.domain.network.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -52,9 +53,9 @@ public class FacilityController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Response> createFacility(@Valid @RequestBody FacilityDTO facilityDTO,
-                                                   BindingResult result){
-        Response response = new Response();
+    public ResponseEntity<FacilityResponse> createFacility(@Valid @RequestBody FacilityDTO facilityDTO,
+                                                           BindingResult result){
+        FacilityResponse response = new FacilityResponse();
 
         if(result.hasErrors()) {
             Map<String, String> errors = new HashMap<>();

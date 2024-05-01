@@ -6,7 +6,7 @@ import com.zanchenko.alex.diploma.domain.Task;
 import com.zanchenko.alex.diploma.domain.autentication.User;
 import com.zanchenko.alex.diploma.domain.enumeration.Urgency;
 import com.zanchenko.alex.diploma.dto.EventDTO;
-import com.zanchenko.alex.diploma.exception.BadRequestException;
+//import com.zanchenko.alex.diploma.exception.BadRequestException;
 import com.zanchenko.alex.diploma.mapper.EventMapper;
 import com.zanchenko.alex.diploma.mapper.TaskMapper;
 import com.zanchenko.alex.diploma.repository.EventRepository;
