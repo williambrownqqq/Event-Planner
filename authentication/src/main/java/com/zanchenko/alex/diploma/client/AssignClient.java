@@ -19,9 +19,11 @@ import java.util.List;
 @FeignClient(name = "assign-client", url = "${http.assignment.baseUrl}")
 public interface AssignClient {
 
-    @PutMapping(path = "/{eventID}/assign")
+    @PutMapping(path = "/{eventID}/assign", consumes = "application/json")
     ResponseEntity<Response> assignExecutorsToEvent(@PathVariable("eventID") Long eventID,
-                                                    @RequestBody AssignExecutorsDTO dto); // make dto  with one list - AssignExecutor
+                                                    AssignExecutorsDTO dto); // i did here DTO instead of just List<Long>
+    // because it will be type mismatch because spring can't understand what is the object is there
+    // i got rid off @RequestBody annotation because it doesn't work with it.
     @PutMapping(path = "/{eventID}/self-assign/{userID}")
     ResponseEntity<Response> selfAssignToEvent(@PathVariable("eventID") Long eventID,
                                                @PathVariable("userID") Long userID);

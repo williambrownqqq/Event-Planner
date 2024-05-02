@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 @Setter
 public class AssignExecutorsDTO {
-    List<Long> userIDs;
+    List<Long> executors;
 }

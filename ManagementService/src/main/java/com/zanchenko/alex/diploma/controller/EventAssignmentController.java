@@ -37,7 +37,7 @@ import java.util.Map;
         @PutMapping("/{eventID}/assign")
         public ResponseEntity<Response> assignExecutorsToEvent(@PathVariable("eventID") Long eventID,
                                                                @RequestBody AssignExecutorsDTO dto){
-            List<Long> userIDs = dto.getUserIDs();
+            List<Long> userIDs = dto.getExecutors();
             Response response = new Response();
             assignmentService.assignExecutors(userIDs, eventID);
             response.setMessage("Executors has been successfully added!");

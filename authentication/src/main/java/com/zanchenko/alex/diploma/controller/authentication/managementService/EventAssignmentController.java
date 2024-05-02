@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -38,17 +39,21 @@ public class EventAssignmentController {
     @PutMapping(path = "/{eventID}/assign")
 //    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response> assignExecutorsToEvent(@PathVariable("eventID") Long eventID,
-                                                           @RequestBody AssignExecutorsDTO dto,
-                                                           BindingResult result){
-        Response response = new Response();
-        if(result.hasErrors()){
-            Map<String, String> errors = new HashMap<>();
-            for (FieldError error : result.getFieldErrors()){
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            response.setErrors(errors);
-            return ResponseEntity.badRequest().body(response);
-        }
+                                                           @RequestBody AssignExecutorsDTO dto){
+//        Response response = new Response();
+//        if(result.hasErrors()){
+//            Map<String, String> errors = new HashMap<>();
+//            for (FieldError error : result.getFieldErrors()){
+//                errors.put(error.getField(), error.getDefaultMessage());
+//            }
+//            response.setErrors(errors);
+//            return ResponseEntity.badRequest().body(response);
+//        }
+
+//        Response response = new Response();
+//        response.setMessage("success");
+//        return ResponseEntity.ok(response);
+        System.out.println(eventID);
         return assignClient.assignExecutorsToEvent(eventID, dto);
     }
     @PutMapping(path = "/{eventID}/self-assign/{userID}")
