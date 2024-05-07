@@ -13,5 +13,6 @@
         <module>authentication</module>
         <module>eventService</module>
         <module>ManagementService</module>
+        <module>MonitoringService</module>
     </modules>
 </project>

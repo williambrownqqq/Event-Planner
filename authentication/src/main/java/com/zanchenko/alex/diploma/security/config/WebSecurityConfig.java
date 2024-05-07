@@ -78,6 +78,7 @@ public class WebSecurityConfig{
                       .requestMatchers(mvcMatcherBuilder.pattern("/facilities/**")).permitAll()
                       .requestMatchers(mvcMatcherBuilder.pattern("/admin-board/**")).permitAll()
                       .requestMatchers(mvcMatcherBuilder.pattern("/assign-event/**")).permitAll()
+                      .requestMatchers(mvcMatcherBuilder.pattern("/monitoring/**")).permitAll()
                             .anyRequest().authenticated()
                 );
                 http.authenticationProvider(authenticationProvider());

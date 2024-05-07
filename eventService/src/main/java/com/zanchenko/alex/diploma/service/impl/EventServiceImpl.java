@@ -62,6 +62,7 @@ public class EventServiceImpl implements EventService {
 
         event.setTasks(tasks);
         eventRepository.save(event);
+        taskRepository.saveAll(tasks);
         mailService.sendEmail(event);
         return eventDTO;
     }
